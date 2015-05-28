@@ -1,2 +1,4 @@
 # Algorithms
-My attempts while reading the introduction to algorithms book
+Coding exercises while going through the algorithms course
+
+Bobby

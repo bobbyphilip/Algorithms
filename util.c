@@ -4,6 +4,8 @@
 
 #include "util.h"
 
+//#define DEBUG 1
+
 void createRandomArray( int length, int** array)
 {
     srandom(time(NULL));
@@ -18,6 +20,7 @@ void createRandomArray( int length, int** array)
 
 void printArray(int length, int*array)
 {
+#if DEBUG
     int i =0;
     if(length==0)
     {
@@ -30,4 +33,5 @@ void printArray(int length, int*array)
       printf(", %d",array[i]);
     }
     printf("]\n");
+#endif
 }

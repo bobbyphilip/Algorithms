@@ -1,54 +1,29 @@
+#include <sorter.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#define DEFAULT_LENGTH 25
+static void insertionSort(int length, int**array);  
+static void mergeSort(int**array, int start, int end);  
+static void merge(int**array, int start, int mid, int end);
 
-void createRandomArray( int length, int** array);
-void printArray(int length, int*array);
-void insertionSort(int length, int**array);  
-void mergeSort(int**array, int start, int end);  
-void merge(int**array, int start, int mid, int end);
 
-#define INSERTION_SORT 0
-#define MERGE_SORT 1
-
-int main(int argc, char* argv[])
+int sort(int length, int**array, sortAlgorithm_t alg)
 {
-   int length = DEFAULT_LENGTH;
-   int sortType = INSERTION_SORT;
-   int* array = NULL;
-   if(argc>1)
-   {
-       if(strcmp(argv[1],"--help") ==0)
-       {
-           printf("1st input parameter 0/1 to select insertion/merge sort  Default insertion sort\n");
-           printf("2nd input parameter  to select number of elements in the array \n");
-       }
-       if (sscanf (argv[1], "%i", &sortType)!=1) {
-           printf ("input arg error - not an integer"); 
-           return -1;
-       }
-   }
-   if(argc>2)
-   {
-       if (sscanf (argv[2], "%i", &length)!=1) {
-           printf ("input arg error - not an integer"); 
-           return -1;
-       }
-   }
-   createRandomArray(length, &array); 
-   printArray(length, array);
-   if(sortType == INSERTION_SORT)
-   {
-       insertionSort(length, &array);  
-   } else if(sortType == MERGE_SORT)
-   {
-       mergeSort(&array, 0, length-1);
-   }
-   printArray(length, array);
-   return 0;
+    switch(alg)
+    {
+        case INSERTION_SORT:
+            insertionSort(length, array);
+            return 0;
+            break;
+        case MERGE_SORT:
+            mergeSort(array,0,length-1);
+            return 0;
+            break;
+        default:
+            printf("Invalid Input\n");
+            return -1;
+    }
 }
+
 
 void insertionSort(int length, int**array)
 {
@@ -79,6 +54,7 @@ void mergeSort(int**array, int start, int end)
         merge(array,start,split,end);
     }
 }
+
 
 void merge(int**array, int start, int mid, int end)
 {
@@ -126,21 +102,3 @@ void merge(int**array, int start, int mid, int end)
     free(left);
     free(right);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

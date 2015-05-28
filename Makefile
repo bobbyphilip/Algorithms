@@ -2,6 +2,12 @@ CFLAGS = -g -Wall -I.
 CC = gcc
 all: sort_driver
 
+DEBUG	?=n
+ifeq ($(DEBUG),y)
+	CFLAGS += -DDEBUG
+endif
+
+
 sort_driver: sort_driver.o sorter.o util.o
 	$(CC) $(CFLAGS) -o sort_driver sort_driver.o sorter.o util.o
 

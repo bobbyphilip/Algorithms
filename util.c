@@ -19,7 +19,7 @@ void createRandomArray( int length, int** array)
     *array = createdArray;
 } 
 
-void printArray(int length, int*array)
+void printArray(int*array, int length)
 {
 #ifdef DEBUG
     int i =0;
@@ -37,7 +37,7 @@ void printArray(int length, int*array)
 #endif
 }
 
-int isArraySorted(int length, int*array)
+int isArraySorted(int*array, int length)
 {
     int i =0;
     for(i=0;i<length-1;i++)

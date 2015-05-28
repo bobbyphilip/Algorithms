@@ -8,7 +8,7 @@ typedef enum sortAlgorithm_t
 }sortAlgorithm_t;
  
 
-int sort(int length, int**array, sortAlgorithm_t alg);
+int sort(int**array, int length, sortAlgorithm_t alg);
 
 
 #endif

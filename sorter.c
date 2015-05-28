@@ -1,17 +1,17 @@
 #include <sorter.h>
 #include <stdio.h>
 #include <stdlib.h>
-static void insertionSort(int length, int**array);  
+static void insertionSort(int**array, int length);  
 static void mergeSort(int**array, int start, int end);  
 static void merge(int**array, int start, int mid, int end);
 
 
-int sort(int length, int**array, sortAlgorithm_t alg)
+int sort(int**array, int length, sortAlgorithm_t alg)
 {
     switch(alg)
     {
         case INSERTION_SORT:
-            insertionSort(length, array);
+            insertionSort(array, length);
             return 0;
             break;
         case MERGE_SORT:
@@ -25,7 +25,7 @@ int sort(int length, int**array, sortAlgorithm_t alg)
 }
 
 
-void insertionSort(int length, int**array)
+void insertionSort(int**array, int length)
 {
     int* inputArray = *array;
     int i=1;

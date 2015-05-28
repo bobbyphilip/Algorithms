@@ -34,9 +34,9 @@ int main(int argc, char* argv[])
     }
 
     createRandomArray(length, &array); 
-    printArray(length, array);
+    printArray(array, length);
     profile();
-    sort(length, &array, sortAlgorithm);  
+    sort(&array, length, sortAlgorithm);  
     int timeTaken = profile();
     if(0 == timeTaken)
     {
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     {
         printf("Time for sorting %d elements is %d seconds  \n",length,timeTaken);
     }
-    int isSorted = isArraySorted(length, array);
+    int isSorted = isArraySorted(array, length);
     if(isSorted)
     {
         printf("Array is sorted successfully \n");
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
         printf("Array is not sorted !! \n");
     }
 
-    printArray(length, array);
+    printArray(array, length);
     return 0;
 }
 

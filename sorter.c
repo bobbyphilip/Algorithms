@@ -62,18 +62,18 @@ void merge(int**array, int start, int mid, int end)
     int* left = malloc(sizeof(int)*(mid-start+1));
     int* right = malloc(sizeof(int)*(end-mid));
     int i=0;
-    for(i=0;i<(mid-start+1);i++)
-    {
-        left[i] = arrayRef[start+i];
-    }
-    for(i=0;i<end-mid;i++)
-    {
-        right[i] = arrayRef[mid+1+i];
-    }
     int leftCounter = 0;
     int rightCounter =0;
     int leftLength = mid-start+1;
     int rightLength = end-mid;
+    for(i=0;i<leftLength;i++)
+    {
+        left[i] = arrayRef[start+i];
+    }
+    for(i=0;i<rightLength;i++)
+    {
+        right[i] = arrayRef[mid+1+i];
+    }
     for(i=start;i<end+1;i++)
     {
         if((leftCounter==leftLength) || (rightCounter==rightLength))

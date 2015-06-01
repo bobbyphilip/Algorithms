@@ -1,6 +1,8 @@
 #include <sorter.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 static void insertionSort(int**array, int length);  
 static void mergeSort(int**array, int start, int end);  
 static void merge(int**array, int start, int mid, int end);
@@ -59,21 +61,16 @@ void mergeSort(int**array, int start, int end)
 void merge(int**array, int start, int mid, int end)
 {
     int* arrayRef = *array;
-    int* left = malloc(sizeof(int)*(mid-start+1));
-    int* right = malloc(sizeof(int)*(end-mid));
+    int leftLength = mid-start+1;
+    int rightLength = end-mid;
+    int* left = malloc(sizeof(int)*leftLength);
+    int* right = malloc(sizeof(int)*rightLength);
     int i=0;
     int leftCounter = 0;
     int rightCounter =0;
-    int leftLength = mid-start+1;
-    int rightLength = end-mid;
-    for(i=0;i<leftLength;i++)
-    {
-        left[i] = arrayRef[start+i];
-    }
-    for(i=0;i<rightLength;i++)
-    {
-        right[i] = arrayRef[mid+1+i];
-    }
+    
+    memcpy(left,arrayRef+start,sizeof(int)*leftLength);
+    memcpy(right,arrayRef+mid+1,sizeof(int)*rightLength);
     for(i=start;i<end+1;i++)
     {
         if((leftCounter==leftLength) || (rightCounter==rightLength))

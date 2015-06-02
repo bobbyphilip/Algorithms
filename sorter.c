@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void insertionSort(int**array, int length);  
-static void mergeSort(int**array, int start, int end);  
-static void merge(int**array, int start, int mid, int end);
+static void insertionSort(int* array, int length);  
+static void mergeSort(int* array, int start, int end);  
+static void merge(int* array, int start, int mid, int end);
 
 
-int sort(int**array, int length, sortAlgorithm_t alg)
+int sort(int*array, int length, sortAlgorithm_t alg)
 {
     switch(alg)
     {
@@ -27,9 +27,8 @@ int sort(int**array, int length, sortAlgorithm_t alg)
 }
 
 
-void insertionSort(int**array, int length)
+void insertionSort(int* inputArray, int length)
 {
-    int* inputArray = *array;
     int i=1;
     int j=0;
     for(i=1;i<length;i++)
@@ -46,7 +45,7 @@ void insertionSort(int**array, int length)
 } 
 
 
-void mergeSort(int**array, int start, int end)
+void mergeSort(int* array, int start, int end)
 {
     if(start<end)
     {
@@ -58,9 +57,8 @@ void mergeSort(int**array, int start, int end)
 }
 
 
-void merge(int**array, int start, int mid, int end)
+void merge(int* arrayRef, int start, int mid, int end)
 {
-    int* arrayRef = *array;
     int leftLength = mid-start+1;
     int rightLength = end-mid;
     int* left = malloc(sizeof(int)*leftLength);

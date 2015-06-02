@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     createRandomArray(length, &array); 
     printArray(array, length);
     profile();
-    sort(&array, length, sortAlgorithm);  
+    sort(array, length, sortAlgorithm);  
     int timeTaken = profile();
     if(0 == timeTaken)
     {

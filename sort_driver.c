@@ -17,8 +17,10 @@ int main(int argc, char* argv[])
     {
         if(strcmp(argv[1],"--help") ==0)
         {
-            printf("1st input parameter 0/1 to select insertion/merge sort  Default insertion sort\n");
-            printf("2nd input parameter  to select number of elements in the array \n");
+            printf("1st input parameter 0 to select insertion sort  (Default)\n");
+            printf("1st input parameter 1 to select merge sort  \n");
+            printf("1st input parameter 3 to select shell sort\n");
+            printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
         }
         if (sscanf (argv[1], "%i", (int*)&sortAlgorithm)!=1) {
             printf ("input arg error - not an integer"); 

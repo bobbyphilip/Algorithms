@@ -4,7 +4,8 @@
 typedef enum sortAlgorithm_t
 {
     INSERTION_SORT,
-    MERGE_SORT
+    MERGE_SORT,
+    SHELL_SORT
 }sortAlgorithm_t;
  
 

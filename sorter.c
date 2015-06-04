@@ -5,18 +5,28 @@
 
 #define SHELL_INC_TOTAL 16
 static void insertionSort(int* array, int length);  
+
 static void mergeSort(int* array, int start, int end);  
 static void merge(int* array, int start, int mid, int end);
-static void shellSort(int* array, int length);  
+/* Used in merge sort for memory */
+int* leftArray = NULL;
+int* rightArray = NULL;
 
+static void shellSort(int* array, int length);  
 /* Magic Constants from Sedgewick*/
 static const int shellIncrements[SHELL_INC_TOTAL] = {1391376, 463792, 198768, 86961,
              33936, 13776, 4592, 1968, 861,
              336, 112, 48, 21, 7, 3, 1};
 
-/* Used in merge sort for memory */
-int* left = NULL;
-int* right = NULL;
+
+static void quickSort(int* array, int start, int end);  
+static int partition(int* array, int start, int end);
+static int median(int* array, int start, int end);
+static void swapIfNeeded(int* array, int a, int b);
+static void swap(int* array, int a, int b);
+
+
+
 /**
  * To classify  n bits of data
  * n! possible arrangements
@@ -42,6 +52,10 @@ int sort(int*array, int length, sortAlgorithm_t alg)
         case SHELL_SORT:
             shellSort(array,length);
             return 0;
+        case QUICK_SORT:
+            quickSort(array,0,length-1);
+            return 0;
+            break;
         default:
             printf("Invalid Input\n");
             return -1;
@@ -86,10 +100,10 @@ static void mergeSort(int* array, int start, int end)
     if(start<end)
     {
         int split = start + (end-start)/2;
-        if(left == NULL )
+        if(leftArray == NULL )
         {
-            left = malloc(sizeof(int)*(split+1));
-            right = malloc(sizeof(int)*(split+1));
+            leftArray = malloc(sizeof(int)*(split+1));
+            rightArray = malloc(sizeof(int)*(split+1));
         }
         mergeSort(array,start,split);
         mergeSort(array,split+1,end);
@@ -98,10 +112,10 @@ static void mergeSort(int* array, int start, int end)
     recursionCounter--;
     if(recursionCounter == 0)
     {
-        free(left);
-        free(right);
-        left = NULL;
-        right = NULL;
+        free(leftArray);
+        free(rightArray);
+        leftArray = NULL;
+        rightArray = NULL;
     }
 }
 
@@ -113,36 +127,36 @@ static void merge(int* arrayRef, int start, int mid, int end)
     int i=0;
     int leftCounter = 0;
     int rightCounter =0;
-    
-    memcpy(left,arrayRef+start,sizeof(int)*leftLength);
-    memcpy(right,arrayRef+mid+1,sizeof(int)*rightLength);
+
+    memcpy(leftArray,arrayRef+start,sizeof(int)*leftLength);
+    memcpy(rightArray,arrayRef+mid+1,sizeof(int)*rightLength);
     i=start;
-    if(left[leftLength-1] > right[0])
+    if(leftArray[leftLength-1] > rightArray[0])
     {
-    for(i=start;i<end+1;i++)
-    {
-        if((leftCounter==leftLength) || (rightCounter==rightLength))
+        for(i=start;i<end+1;i++)
         {
-            break;
+            if((leftCounter==leftLength) || (rightCounter==rightLength))
+            {
+                break;
+            }
+            if(leftArray[leftCounter] <= rightArray[rightCounter])
+            {
+                arrayRef[i] = leftArray[leftCounter++];
+            }else
+            {
+                arrayRef[i] = rightArray[rightCounter++];
+            }
         }
-        if(left[leftCounter] <= right[rightCounter])
-        {
-            arrayRef[i] = left[leftCounter++];
-        }else
-        {
-            arrayRef[i] = right[rightCounter++];
-        }
-    }
     }
     if(i<end+1)
     {
         while(leftCounter<leftLength)
         {
-            arrayRef[i++] = left[leftCounter++];
+            arrayRef[i++] = leftArray[leftCounter++];
         }
         while(rightCounter<rightLength)
         {
-            arrayRef[i++] = right[rightCounter++];
+            arrayRef[i++] = rightArray[rightCounter++];
         }
     }
 }
@@ -180,12 +194,101 @@ static void shellSort(int* array, int length)
 
 
 
+/**
+ * Shuffle the array.
+ * partition for some i, element[i] in place, if j<i => a[j]<=a[i], j>i => a[j]>=a[i]
+ * sort each sub-part recursively
+ * T(N) = N(for the split) + T(N/2) + T(N/2)
+ * Unstable
+ * Best O(NlogN), avg O(NlogN), worst O(N^2) --rare
+ * space complexity O(N)/O(logN)
+ * Not the most efficient of implementations.
+ * Since the input from the driver is random, not shuffling it here
+ * Implementation is as follows, partition the array into two, leaving the median there
+ * Recursively sort the 2 sides
+ */
+static void quickSort(int* array, int start, int end)
+{
+    if(start<end)
+    {
+        int mid = partition(array, start, end);
+        quickSort(array, start, mid-1);
+        quickSort(array, mid+1, end);
+        
+    }
+}
+
+/*
+ * Finds a  median of the first, middle and end elements
+ * Moves the median element to the end of the array
+ * Takes the elements of the array from start to end
+ * Track a position to store the median.
+ * Array elements get put to the left/right of this
+ * At the end median is put into this tracked position
+ */
+static int partition(int* array, int start, int end)
+{
+    int medianIndex = median(array, start, end);
+    int medianValue = array[medianIndex];
+    
+    swap(array, medianIndex, end);
+    
+    int pivot = start;
+    int i;
+    for(i = start; i<end;i++)
+    {
+        if(array[i]<= medianValue)
+        {
+            swap(array,i,pivot);
+            pivot++;
+        }
+    }
+    swap(array,pivot,end);
+    return pivot;
+}
 
 
 
+static int median(int* array, int start, int end)
+{
+    if((end-start) <2)
+    {
+        return start;
+    }
+    int middle = start + (end-start)/2;
+    /*
+     * Sorting using sorting network
+     * SWAPs needed generated from the awesome page
+     * pages.ripco.net/~jgamble/nw.html
+     */
+    swapIfNeeded(array, middle, end);
+    swapIfNeeded(array, start, end);
+    swapIfNeeded(array, start, middle);
+    /*
+     * at this point the three elements are sorted among themselves.
+     *Returning the median
+     * Changing the order doesnt matter, since quick sort is anyway unstable
+     */
+    return middle;
+}
 
 
 
+static void swapIfNeeded(int* array, int a, int b)
+{
+    if(array[a] >array[b])
+    {
+        swap(array, a, b);
+    }
+}     
+
+
+static void swap(int* array, int a, int b)
+{
+    int temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
+}
 
 
 

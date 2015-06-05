@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <sorter.h>
 #include <util.h>
@@ -21,6 +22,7 @@ int main(int argc, char* argv[])
             printf("1st input parameter 1 to select merge sort  \n");
             printf("1st input parameter 2 to select shell sort\n");
             printf("1st input parameter 3 to select quick sort\n");
+            printf("1st input parameter 4 to select counting sort\n");
             printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
         }
         if (sscanf (argv[1], "%i", (int*)&sortAlgorithm)!=1) {
@@ -48,6 +50,7 @@ int main(int argc, char* argv[])
     {
         printf("Time for sorting %d elements is %d seconds  \n",length,timeTaken);
     }
+    
     int isSorted = isArraySorted(array, length);
     if(isSorted)
     {
@@ -57,6 +60,7 @@ int main(int argc, char* argv[])
     }
 
     printArray(array, length);
+    free(array);
     return 0;
 }
 

@@ -26,6 +26,7 @@ static void swapIfNeeded(int* array, int a, int b);
 static void swap(int* array, int a, int b);
 
 
+static void countingSort(int* array, int length, int base);
 
 /**
  * To classify  n bits of data
@@ -54,6 +55,10 @@ int sort(int*array, int length, sortAlgorithm_t alg)
             return 0;
         case QUICK_SORT:
             quickSort(array,0,length-1);
+            return 0;
+            break;
+        case COUNTING_SORT:
+            countingSort(array,length,length*10);
             return 0;
             break;
         default:
@@ -206,6 +211,8 @@ static void shellSort(int* array, int length)
  * Since the input from the driver is random, not shuffling it here
  * Implementation is as follows, partition the array into two, leaving the median there
  * Recursively sort the 2 sides
+ * If total elements to be sorted in a call to this API is small, good idea to used insertion sort
+ * Java uses 7 as threshold, qsort uses 4
  */
 static void quickSort(int* array, int start, int end)
 {
@@ -273,7 +280,9 @@ static int median(int* array, int start, int end)
 }
 
 
-
+/*
+ * Does a compare and swaps if a> b
+ */
 static void swapIfNeeded(int* array, int a, int b)
 {
     if(array[a] >array[b])
@@ -293,4 +302,59 @@ static void swap(int* array, int a, int b)
 
 
 
+/**
+ * Linear time sorting, done by moving from the comparision model which has the limit O(NlogN)
+ * Integer sorting as example
+ * keys to be sorted which are integers in range {0,1,2....k-1}
+ * If k is not too large, then O(N)
+ */
 
+
+
+
+/**
+ * Counting sort is of order O(N+K), so if K is comparable to N this is of order O(N)
+ * If K gets much bigger then this changes
+ * initialise an counting array of length k (0-k-1) to zero
+ * Go over the n inputs incrementing countingArray[n]
+ * to finish the sort iterate over the countingArray, 
+ * output[i++] = while(countingArray[j]!= 0) j, decrementing countingArray[j],and going forward by incremening j
+ * But this is not stable, one way is to keep a linked list at each node of the counting array
+ *
+ */
+
+static void countingSort(int* array, int length, int base)
+{
+   int* pos = malloc(base*sizeof(int));
+   int* temp= malloc(length*sizeof(int));
+   memset(temp,0,length*sizeof(int));
+   memset(pos, 0, base*sizeof(int));
+   int i=0;
+   for(i=0;i<length;i++)
+   {
+       pos[array[i]]++;
+   }
+   for(i=1;i<base;i++)
+   {
+       pos[i] = pos[i] + pos[i-1];
+   }
+   for(i=0;i<length;i++)
+   {
+       int index = pos[array[i]-1];
+       temp[index]= array[i];
+       pos[array[i]-1]++;
+
+   }
+   memcpy(array,temp,length*sizeof(int));
+   free(temp);
+   free(pos);
+
+}
+
+/**
+ * Radix sort
+ * Imagine integers as in base b
+ * #digits is d = log(k) to the base d, where k is maximum value of keys
+ * Sort number by LSD the next .etc. ( O(N+b))
+ * Total becomes O( (N+b) log(k)) which results in linear for 
+ */

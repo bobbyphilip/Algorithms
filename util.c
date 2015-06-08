@@ -19,6 +19,31 @@ void createRandomArray( int length, int** array)
     *array = createdArray;
 } 
 
+void createRandomStrings(int length, int stringLength, char*** array)
+{
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    srandom(time(NULL));
+    char** createdArray = malloc(sizeof(char*)*length);
+    int i=0;
+    int j=0;
+    for(i=0;i<length;i++)
+    {
+        createdArray[i] = malloc(sizeof(char)*stringLength);
+        for(j=0;j<stringLength-1;j++)
+        {
+    
+            createdArray[i][j]= alphanum[random()%(sizeof(alphanum)-1)];
+        }
+        createdArray[i][j]= '\0';
+    }
+    *array = createdArray;
+}
+
+
 void printArray(int*array, int length)
 {
 #ifdef DEBUG
@@ -32,6 +57,26 @@ void printArray(int*array, int length)
     for(i=1;i<length;i++)
     {
         printf(", %d",array[i]);
+    }
+    printf("]\n");
+#endif
+}
+
+
+
+void printStringArray(char** array, int length)
+{
+#ifdef DEBUG
+    int i =0;
+    if(length==0)
+    {
+        printf("[]");
+        return;
+    }
+    printf("[%s",array[0]);
+    for(i=1;i<length;i++)
+    {
+        printf(", %s",array[i]);
     }
     printf("]\n");
 #endif

@@ -28,6 +28,7 @@ static void swap(int* array, int a, int b);
 
 static void countingSort(int* array, int length, int base);
 
+static void radixLsdSort(char** array, int length, int stringLength);
 /**
  * To classify  n bits of data
  * n! possible arrangements
@@ -58,6 +59,8 @@ int sort(int*array, int length, sortAlgorithm_t alg)
             return 0;
             break;
         case COUNTING_SORT:
+            //length*10 because that is how the randown numbers are generated in util.c
+            //This wont really prove the efficiency of counting sort
             countingSort(array,length,length*10);
             return 0;
             break;
@@ -65,6 +68,20 @@ int sort(int*array, int length, sortAlgorithm_t alg)
             printf("Invalid Input\n");
             return -1;
     }
+}
+
+int stringSort(char** array, int length, int stringLength, sortAlgorithm_t alg)
+{
+    switch(alg)
+    {
+        case RADIX_LSD_SORT:
+            radixLsdSort(array, length, stringLength);
+            break;
+        default:
+            printf("Invalid Input\n");
+            return -1;
+    }
+    return 0;
 }
 
 /**
@@ -313,23 +330,28 @@ static void swap(int* array, int a, int b)
 
 
 /**
- * Counting sort is of order O(N+K), so if K is comparable to N this is of order O(N)
- * If K gets much bigger then this changes
+ * Counting sort is of order O(N+K)
+ * Space O(N+K)
  * initialise an counting array of length k (0-k-1) to zero
  * Go over the n inputs incrementing countingArray[n]
  * to finish the sort iterate over the countingArray, 
  * output[i++] = while(countingArray[j]!= 0) j, decrementing countingArray[j],and going forward by incremening j
  * But this is not stable, one way is to keep a linked list at each node of the counting array
- *
+ * Implementation below is stable
  */
 
 static void countingSort(int* array, int length, int base)
 {
    int* pos = malloc(base*sizeof(int));
    int* temp= malloc(length*sizeof(int));
-   memset(temp,0,length*sizeof(int));
-   memset(pos, 0, base*sizeof(int));
+   if(NULL==pos || NULL==temp)
+   {
+       printf("malloc failed \n");
+       return;
+   }
    int i=0;
+   memset(pos,0,base*sizeof(int));
+   memset(temp,0,length*sizeof(int));
    for(i=0;i<length;i++)
    {
        pos[array[i]]++;
@@ -338,9 +360,18 @@ static void countingSort(int* array, int length, int base)
    {
        pos[i] = pos[i] + pos[i-1];
    }
+   /**
+    * At this point the cumulative counts are obtained.
+    * Each index will be the sum of all the elements <= that number
+    */
    for(i=0;i<length;i++)
    {
+       if(array[i] ==0)
+           continue;
        int index = pos[array[i]-1];
+       /**
+        * Index will give how many elements to the left of this element are there
+        */
        temp[index]= array[i];
        pos[array[i]-1]++;
 
@@ -356,5 +387,42 @@ static void countingSort(int* array, int length, int base)
  * Imagine integers as in base b
  * #digits is d = log(k) to the base d, where k is maximum value of keys
  * Sort number by LSD the next .etc. ( O(N+b))
- * Total becomes O( (N+b) log(k)) which results in linear for 
+ * Total becomes O( (N+b) log(k)) which can result in linear
  */
+
+static void radixLsdSort(char** array, int length, int stringLength)
+{
+    int pos[256];
+    char** temp = malloc(length*sizeof(char*));
+    int i =0;
+    int stringIndex =stringLength -1;
+    while(stringIndex != 0)
+    {
+        memset(temp, 0, length*sizeof(char*));
+        memset(pos,0,256*sizeof(int));
+
+        for(i=0;i<length;i++)
+        {
+            pos[(int)array[i][stringIndex-1]]++;
+        }
+        for(i=1;i<256;i++)
+        {
+            pos[i]+=pos[i-1];
+        }
+        
+        int index=0;     
+        for(i=0;i<length;i++)
+        {
+            index = pos[array[i][stringIndex-1]-1];
+        //    strncpy(temp[index],array[i],stringLength);
+            temp[index] = array[i];
+            pos[array[i][stringIndex-1]-1]++;
+        }
+        for(i=0;i<length;i++)
+        {
+          //  strncpy(array[i],temp[i],stringLength);
+            array[i] = temp[i];
+        }
+        stringIndex--;
+    }
+}

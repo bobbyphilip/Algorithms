@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
             printf("1st input parameter 2 to select shell sort\n");
             printf("1st input parameter 3 to select quick sort\n");
             printf("1st input parameter 4 to select counting sort\n");
+            printf("1st input parameter 5 to select string radix lsd sort\n");
             printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
         }
         if (sscanf (argv[1], "%i", (int*)&sortAlgorithm)!=1) {
@@ -37,6 +38,26 @@ int main(int argc, char* argv[])
             return -1;
         }
     }
+
+    if(RADIX_LSD_SORT == sortAlgorithm)
+    {
+        char** stringArray = NULL;
+        createRandomStrings(length+1, 9, &stringArray);
+        printStringArray(stringArray, length);
+        profile();
+        stringSort(stringArray,length, 9, sortAlgorithm);
+        int timeTaken = profile();
+        if(0 == timeTaken)
+        {
+            printf("Less than 1 second for sorting %d elements \n",length);
+        }else
+        {
+            printf("Time for sorting %d elements is %d seconds  \n",length,timeTaken);
+        }
+        printStringArray(stringArray, length);
+        return 0;
+    }
+    
 
     createRandomArray(length, &array); 
     printArray(array, length);

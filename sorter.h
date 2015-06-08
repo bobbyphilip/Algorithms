@@ -7,11 +7,14 @@ typedef enum sortAlgorithm_t
     MERGE_SORT,
     SHELL_SORT,
     QUICK_SORT,
-    COUNTING_SORT
+    COUNTING_SORT,
+    RADIX_LSD_SORT
+
 }sortAlgorithm_t;
  
 
 int sort(int*array, int length, sortAlgorithm_t alg);
+int stringSort(char** array, int length, int stringLength, sortAlgorithm_t alg);
 
 
 #endif

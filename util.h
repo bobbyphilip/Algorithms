@@ -15,4 +15,7 @@ int isArraySorted(int*array, int length);
 int profile();
 
 
+int randomInRange(int start, int end);
+void shuffle(int* array, int length);
+void swap(int* array, int i, int j);
 #endif

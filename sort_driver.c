@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
 
     if(RADIX_LSD_SORT == sortAlgorithm)
     {
+        printf("Radix LSD Sort \n");
         char** stringArray = NULL;
         createRandomStrings(length+1, 9, &stringArray);
         printStringArray(stringArray, length);

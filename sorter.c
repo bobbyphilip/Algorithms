@@ -44,23 +44,28 @@ int sort(int*array, int length, sortAlgorithm_t alg)
     switch(alg)
     {
         case INSERTION_SORT:
+            printf("Insertion sort \n");
             insertionSort(array, length);
             return 0;
             break;
         case MERGE_SORT:
+            printf("Merge sort \n");
             mergeSort(array,0,length-1);
             return 0;
             break;
         case SHELL_SORT:
+            printf("Shell sort \n");
             shellSort(array,length);
             return 0;
         case QUICK_SORT:
+            printf("Quick  sort \n");
             quickSort(array,0,length-1);
             return 0;
             break;
         case COUNTING_SORT:
             //length*10 because that is how the randown numbers are generated in util.c
             //This wont really prove the efficiency of counting sort
+            printf("Counting sort \n");
             countingSort(array,length,length*10);
             return 0;
             break;

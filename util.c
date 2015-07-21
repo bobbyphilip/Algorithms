@@ -134,13 +134,11 @@ int randomInRange(int start, int end)
     }
     int range = end-start+1;
     int maxRandomRange = RAND_MAX -(RAND_MAX%range);
-    int bucketSize = maxRandomRange/range;
     int r =0;
     do{
         r= random();
     }while(r>=maxRandomRange);
-
-    r = r/bucketSize;
+    r = r%range;
     return start+ r;
 }
 
@@ -159,7 +157,6 @@ void shuffle(int* array, int length)
     int r =0;
     for(i=0;i<length;i++)
     {
-       
         r = randomInRange(0,i);
         swap(array,i,r);
     }

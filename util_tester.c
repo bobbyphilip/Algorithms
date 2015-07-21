@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         if(strcmp(argv[1],"--help") ==0)
         {
             printf("1st input parameter 0 to select random array in a range (Default)\n");
-            printf("1st input parameter 1 to select shuffle (Default)\n");
+            printf("1st input parameter 1 to select shuffle This will continue in a loop till Ctrl+C(Default)\n");
             printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
         }
         if (sscanf (argv[1], "%i", (int*)&test)!=1) {
@@ -35,12 +35,14 @@ int main(int argc, char* argv[])
     }
     switch(test)
     {
+        case 0:
+            test_random(length);
+            break;
         case 1: 
             test_shuffle(length);
             break;
         default:
-            test_random(length);
-            break;
+            printf("Invalid test case \n");
     }
     return 0;
 }
@@ -67,12 +69,32 @@ void test_random(length)
 
 void test_shuffle(int arrayLength)
 {
-    int* array = NULL;
-    createRandomArray(arrayLength,&array);
-    printArray(array,arrayLength);
-    shuffle(array,arrayLength);
-    printArray(array,arrayLength);
-    free(array);
+    int sum =0;
+    int avg =0;
+    int iter =0;
+    int count =0;
+    while(1)
+    {
+        int* array = NULL;
+        createRandomArray(arrayLength,&array);
+        printArray(array,arrayLength);
+        int isSorted = isArraySorted(array, arrayLength);
+        count =0;
+        while(!isSorted)
+        {
+            count++;
+            shuffle(array,arrayLength);
+            isSorted = isArraySorted(array,arrayLength);
+            if(isSorted)
+            {
+                sum+=count;
+                iter++;
+                avg = sum/iter;
+                printf("Average runs for shuffle bogo sort  is %d after %d iterations \n",avg,iter);
+            }
+        }
+        free(array);
+    }
 }
 
 

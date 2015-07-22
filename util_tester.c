@@ -43,6 +43,7 @@ int main(int argc, char* argv[])
             break;
         default:
             printf("Invalid test case \n");
+            break;
     }
     return 0;
 }
@@ -55,14 +56,18 @@ void test_random(length)
     int *array;
     array = malloc(length*sizeof(int));
     memset(array,0,length*sizeof(int));
-    while(i<1800000)
+    int iterations = 1800000;
+    while(i<iterations)
     {
         r = randomInRange(0,length-1);
         array[r]++;
         i++;
     }
 #ifdef DEBUG
-    printf("Going to print occurences of each element \n");
+    printf("Ideal average value is %d \n",iterations/length);
+    printf("Going to print frequency of each number in range 0-%d \n",length-1);
+#else
+    printf("Random generation test needs to be built with DEBUG=y to see o/p\n"); 
 #endif
     printArray(array,length);
 }

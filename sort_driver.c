@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     {
         printf("Radix LSD Sort \n");
         char** stringArray = NULL;
-        createRandomStrings(length+1, 9, &stringArray);
+        createRandomStringArray(length+1, 9, &stringArray);
         printStringArray(stringArray, length);
         profile();
         stringSort(stringArray,length, 9, sortAlgorithm);

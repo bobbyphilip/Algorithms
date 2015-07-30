@@ -3,7 +3,8 @@
 
 void createRandomArray( int length, int** array);
 void printArray(int*array, int length);
-void createRandomStrings(int length, int stringLength, char*** array);
+void createRandomStringArray(int length, int stringLength, char*** array);
+void createRandomString(char** outputString, int stringLength);
 void printStringArray(char** array, int length);
 /*
  * Returns 1 if sorted in ascending order

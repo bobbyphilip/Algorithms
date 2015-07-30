@@ -26,29 +26,41 @@ void createRandomArray( int length, int** array)
     *array = createdArray;
 } 
 
-void createRandomStrings(int length, int stringLength, char*** array)
+void createRandomStringArray(int length, int stringLength, char*** array)
 {
+
+    char** createdArray = malloc(sizeof(char*)*length);
+    int i=0;
+    for(i=0;i<length;i++)
+    {
+        createRandomString(&createdArray[i], stringLength);
+    }
+    *array = createdArray;
+}
+
+void createRandomString(char** outputString, int stringLength)
+{
+    char* string = malloc(sizeof(char)*stringLength);
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
-
-    srandom(time(NULL));
-    char** createdArray = malloc(sizeof(char*)*length);
-    int i=0;
-    int j=0;
-    for(i=0;i<length;i++)
+    static int randomSeeded = 0;
+    if(!randomSeeded)
     {
-        createdArray[i] = malloc(sizeof(char)*stringLength);
-        for(j=0;j<stringLength-1;j++)
-        {
-    
-            createdArray[i][j]= alphanum[random()%(sizeof(alphanum)-1)];
-        }
-        createdArray[i][j]= '\0';
+        srandom(time(NULL));
+        randomSeeded =1;
     }
-    *array = createdArray;
+    int i =0;
+    for(i=0;i<stringLength-1;i++)
+    {
+
+        string[i]= alphanum[random()%(sizeof(alphanum)-1)];
+    }
+    string[i]= '\0';
+    *outputString = string;
 }
+
 
 
 void printArray(int*array, int length)

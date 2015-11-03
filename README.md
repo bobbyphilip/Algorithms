@@ -1,4 +1,3 @@
-# Algorithms
-Code samples while going through algorithms courses
+Code samples while reading through various algorithms
 
 Bobby

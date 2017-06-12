@@ -1,6 +1,6 @@
 CFLAGS = -g -Wall -I.
 CC = gcc
-all: sort_driver util_tester string_rotate
+all: sort_driver util_tester string_rotate fibonacci
 
 DEBUG	?=n
 ifeq ($(DEBUG),y)
@@ -29,7 +29,11 @@ util.o: util.c util.h
 util_tester.o: util_tester.c 
 	$(CC) $(CFLAGS) -c util_tester.c
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate
+fibonacci: fibonacci.c 
+	$(CC) $(CFLAGS) -o fibonacci fibonacci.c
+
+
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci
 
 clean_sorter:
 	rm -f sorter.o
@@ -51,3 +55,6 @@ clean_string_rotate:
 	rm -f string_rotate.o
 	rm -f string_rotate
 
+clean_fibonacci:
+	rm -f fibonacci.o
+	rm -f fibonacci

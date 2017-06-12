@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
             printf("1st input parameter 0 to select random array in a range (Default)\n");
             printf("1st input parameter 1 to select shuffle This will continue in a loop till Ctrl+C(Default)\n");
             printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
+            return 0;
         }
         if (sscanf (argv[1], "%i", (int*)&test)!=1) {
             printf ("input arg error - not an integer"); 

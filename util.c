@@ -156,7 +156,7 @@ int randomInRange(int start, int end)
 
 /**
  * Knuth shuffle.
- * swaps element at array[i] with number at arrayy[randpom->0-i)
+ * swaps element at array[i] with number at array[random->0-i)
  * Taking random over whole range is wrong.
  * For example for 3 cards.
  * total permutation is 3!

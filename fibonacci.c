@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 int fibonacci(int element);
+int fibonacciRecursive(int element);
 
 
 int main(int argc, char* argv[])
@@ -24,7 +25,8 @@ int main(int argc, char* argv[])
     
 }
 
-int fibonacci(int element)
+//This repeats calculations making it non-efficient.  Factorial is a better example of recursion  n*fact(n-1)
+int fibonacciRecursive(int element)
 {
     if((element == 0) || (element ==1))
     {
@@ -34,4 +36,21 @@ int fibonacci(int element)
 }
     
     
+int fibonacci(int element)
+{
+   int first =0;
+   int second =1;
+   int sum;
+   int i;
+   
+   for(i=2; i<=element;i++)
+   {
+       sum = first+second;
+       first = second;
+       second = sum;
+   }
+   return second;
+
+
+}
 

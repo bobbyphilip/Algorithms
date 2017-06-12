@@ -32,8 +32,12 @@ util_tester.o: util_tester.c
 fibonacci: fibonacci.c 
 	$(CC) $(CFLAGS) -o fibonacci fibonacci.c
 
+maxSubArray: maxSubArray.c util.o
+	$(CC) $(CFLAGS) -o maxSubArray maxSubArray.c util.o
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci
+
+
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray
 
 clean_sorter:
 	rm -f sorter.o
@@ -58,3 +62,5 @@ clean_string_rotate:
 clean_fibonacci:
 	rm -f fibonacci.o
 	rm -f fibonacci
+clean_maxSubArray:
+	rm -f maxSubArray

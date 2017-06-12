@@ -21,7 +21,8 @@ void createRandomArray( int length, int** array)
     for(i=0;i<length;i++)
     {
         //Not ideal! Using % doesnt produce a uniformly distributed sequence
-        createdArray[i]= random()%(length*10); 
+	// generating random in twice the range, then subtracting the range, to get negative numbers also
+        createdArray[i]= (random()%(length*10*2) - (length*10)); 
     }
     *array = createdArray;
 } 

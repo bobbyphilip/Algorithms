@@ -345,6 +345,8 @@ static void swap(int* array, int a, int b)
  * Implementation below is stable
  */
 
+
+//Doesnt work right now with negative arrays
 static void countingSort(int* array, int length, int base)
 {
    int* pos = malloc(base*sizeof(int));

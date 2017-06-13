@@ -35,6 +35,7 @@ void heapIncreaseKey(BinaryHeap* heap, int index, int key)
    {
 	swap(array, parentIndex, index);
         index = parentIndex;
+   	parentIndex = PARENT(index);
    }
 }
 

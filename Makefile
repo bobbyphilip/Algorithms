@@ -37,8 +37,10 @@ maxSubArray: maxSubArray.c util.o
 
 
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_dSYM
 
+clean_dSYM:
+	rm -rf *dSYM
 clean_sorter:
 	rm -f sorter.o
 

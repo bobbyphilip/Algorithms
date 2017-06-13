@@ -29,6 +29,10 @@ static void swap(int* array, int a, int b);
 static void countingSort(int* array, int length, int base);
 
 static void radixLsdSort(char** array, int length, int stringLength);
+
+static void heapSort(int* array, int length);  
+static void maxHeapify(int* array, int length, int index);
+static void buildMaxHeap(int* array, int length);
 /**
  * To classify  n bits of data
  * n! possible arrangements
@@ -67,6 +71,11 @@ int sort(int*array, int length, sortAlgorithm_t alg)
             //This wont really prove the efficiency of counting sort
             printf("Counting sort \n");
             countingSort(array,length,length*10);
+            return 0;
+            break;
+        case HEAP_SORT:
+            printf("HEAP sort \n");
+            heapSort(array,length);
             return 0;
             break;
         default:
@@ -349,6 +358,13 @@ static void swap(int* array, int a, int b)
 //Doesnt work right now with negative arrays
 static void countingSort(int* array, int length, int base)
 {
+   //Hack, converting input array to all positive number
+   int i=0;
+   for(i=0;i<length;i++)
+   {
+       if(array[i]<0)
+          array[i]*= -1;
+   }
    int* pos = malloc(base*sizeof(int));
    int* temp= malloc(length*sizeof(int));
    if(NULL==pos || NULL==temp)
@@ -356,7 +372,6 @@ static void countingSort(int* array, int length, int base)
        printf("malloc failed \n");
        return;
    }
-   int i=0;
    memset(pos,0,base*sizeof(int));
    memset(temp,0,length*sizeof(int));
    for(i=0;i<length;i++)
@@ -433,3 +448,72 @@ static void radixLsdSort(char** array, int length, int stringLength)
         stringIndex--;
     }
 }
+
+
+
+
+static void heapSort(int* array, int length)
+{
+   int heapSize = length;
+   buildMaxHeap(array,length);
+   int i = 0;
+   /*
+    Largest element moved out to end of array, the remaining elements are max-heapified
+    Continously doing thus gets the sorted array
+    */
+   for(i= length-1;i>0;i--)
+   {
+	swap(array,i,0);
+        heapSize--;
+        maxHeapify(array, heapSize, 0);
+   }
+
+}
+
+#define LEFT(i) 2*i+1
+#define RIGHT(i) 2*i+2
+
+/*
+ For an n-element heap, leaves are at n/2 +1, n/2 +2 ...n
+ length-1 is done because element x will be at array position x-1
+ All the leaves are 1 element max-heaps
+*/
+static void buildMaxHeap(int* array, int length)
+{
+    int i =0;
+    for(i=((length-1)/2);i>=0;i--)
+    {
+	maxHeapify(array,length, i);
+    }	
+}
+
+/*
+ Idea is all the nodes below(after) index follow maxHeap property (ie; parent is >= node)
+ element at index might not follow this. So we want to push it to its position. First find larger of its two children, swap with it. 
+ Then recursively run this at the changed node
+*/ 
+static void maxHeapify(int* array, int length, int index)
+{
+    int left = LEFT(index);
+    int right = RIGHT(index);
+    
+    int largest = index;
+    if((left < length) && array[left] > array[largest])
+    {
+  	largest = left;
+    }
+    if( (right<length) && array[right]> array[largest])
+    {
+        largest = right;
+    }
+    if(largest != index)
+    {
+	swap(array, largest, index);
+ 	maxHeapify(array, length, largest);
+    }
+}
+
+
+
+
+

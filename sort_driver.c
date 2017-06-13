@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
             printf("1st input parameter 3 to select quick sort\n");
             printf("1st input parameter 4 to select counting sort\n");
             printf("1st input parameter 5 to select string radix lsd sort\n");
+            printf("1st input parameter 6 to select heap sort\n");
             printf("2nd input parameter  to select number of elements in the array (Default 25) \n");
             return 0;
         }

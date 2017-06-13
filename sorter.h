@@ -8,7 +8,8 @@ typedef enum sortAlgorithm_t
     SHELL_SORT,
     QUICK_SORT,
     COUNTING_SORT,
-    RADIX_LSD_SORT
+    RADIX_LSD_SORT,
+    HEAP_SORT
 
 }sortAlgorithm_t;
  

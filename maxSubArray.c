@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     } 
     printf("Max subarray sum is %d from %d to %d \n",maxOverall, startIndex, endIndex);
  
-    //free(array);
+    free(array);
     return 0;
 }
 

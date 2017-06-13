@@ -8,8 +8,8 @@ ifeq ($(DEBUG),y)
 endif
 
 
-sort_driver: sort_driver.o sorter.o util.o
-	$(CC) $(CFLAGS) -o sort_driver sort_driver.o sorter.o util.o
+sort_driver: sort_driver.o sorter.o util.o maxBinaryHeap.o
+	$(CC) $(CFLAGS) -o sort_driver sort_driver.o sorter.o util.o maxBinaryHeap.o
 
 util_tester: util_tester.o util.o
 	$(CC) $(CFLAGS) -o util_tester util_tester.o util.o
@@ -34,6 +34,9 @@ fibonacci: fibonacci.c
 
 maxSubArray: maxSubArray.c util.o
 	$(CC) $(CFLAGS) -o maxSubArray maxSubArray.c util.o
+
+maxBinaryHeap.o: maxBinaryHeap.c maxBinaryHeap.h 
+	$(CC) $(CFLAGS) -c maxBinaryHeap.c
 
 
 

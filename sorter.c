@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <maxBinaryHeap.h>
+
 
 #define SHELL_INC_TOTAL 16
 static void insertionSort(int* array, int length);  
@@ -31,8 +33,6 @@ static void countingSort(int* array, int length, int base);
 static void radixLsdSort(char** array, int length, int stringLength);
 
 static void heapSort(int* array, int length);  
-static void maxHeapify(int* array, int length, int index);
-static void buildMaxHeap(int* array, int length);
 /**
  * To classify  n bits of data
  * n! possible arrangements
@@ -454,8 +454,12 @@ static void radixLsdSort(char** array, int length, int stringLength)
 
 static void heapSort(int* array, int length)
 {
-   int heapSize = length;
-   buildMaxHeap(array,length);
+   BinaryHeap* heap = malloc(sizeof(BinaryHeap));
+   heap->array = array;
+   heap->heapSize = length;
+   heap->arrayLength = length;
+
+   buildMaxHeap(heap);
    int i = 0;
    /*
     Largest element moved out to end of array, the remaining elements are max-heapified
@@ -463,57 +467,12 @@ static void heapSort(int* array, int length)
     */
    for(i= length-1;i>0;i--)
    {
-	swap(array,i,0);
-        heapSize--;
-        maxHeapify(array, heapSize, 0);
+	swap(heap->array,i,0);
+        heap->heapSize--;
+        maxHeapify(heap, 0);
    }
 
 }
-
-#define LEFT(i) 2*i+1
-#define RIGHT(i) 2*i+2
-
-/*
- For an n-element heap, leaves are at n/2 +1, n/2 +2 ...n
- length-1 is done because element x will be at array position x-1
- All the leaves are 1 element max-heaps
-*/
-static void buildMaxHeap(int* array, int length)
-{
-    int i =0;
-    for(i=((length-1)/2);i>=0;i--)
-    {
-	maxHeapify(array,length, i);
-    }	
-}
-
-/*
- Idea is all the nodes below(after) index follow maxHeap property (ie; parent is >= node)
- element at index might not follow this. So we want to push it to its position. First find larger of its two children, swap with it. 
- Then recursively run this at the changed node
-*/ 
-static void maxHeapify(int* array, int length, int index)
-{
-    int left = LEFT(index);
-    int right = RIGHT(index);
-    
-    int largest = index;
-    if((left < length) && array[left] > array[largest])
-    {
-  	largest = left;
-    }
-    if( (right<length) && array[right]> array[largest])
-    {
-        largest = right;
-    }
-    if(largest != index)
-    {
-	swap(array, largest, index);
- 	maxHeapify(array, length, largest);
-    }
-}
-
-
 
 
 

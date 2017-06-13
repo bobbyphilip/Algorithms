@@ -13,9 +13,8 @@ typedef struct BinaryHeap
 void maxHeapify(BinaryHeap* binaryHeap, int index);
 void buildMaxHeap(BinaryHeap* heap);
 
-int heapMaximum(int* array);
-int heapExtractMaximum( int* array, int length);
-void heapIncreaseKey(int* array, int length, int index, int key);
-void heapInsert(int* array, int key);
+#define PARENT(i) (i-1)/2
+#define LEFT(i) 2*i+1
+#define RIGHT(i) 2*i+2
 
 #endif

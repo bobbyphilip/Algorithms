@@ -38,6 +38,9 @@ maxSubArray: maxSubArray.c util.o
 maxBinaryHeap.o: maxBinaryHeap.c maxBinaryHeap.h 
 	$(CC) $(CFLAGS) -c maxBinaryHeap.c
 
+maxPriorityQueue.o: maxPriorityQueue.c maxPriorityQueue.h 
+	$(CC) $(CFLAGS) -c maxPriorityQueue.c
+
 
 
 clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_dSYM

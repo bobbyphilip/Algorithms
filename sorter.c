@@ -351,10 +351,7 @@ static void swap(int* array, int a, int b)
  * initialise an counting array of length k (0-k-1) to zero
  * Go over the n inputs incrementing countingArray[n]
  * to finish the sort iterate over the countingArray, 
- * output[i++] = while(countingArray[j]!= 0) j, decrementing countingArray[j],and going forward by incremening j
- * But this is not stable, one way is to keep a linked list at each node of the counting array
  */
-
 
 static void countingSort(int* array, int length, int base)
 {
@@ -386,8 +383,9 @@ static void countingSort(int* array, int length, int base)
    /**
     * At this point the cumulative counts are obtained
     * Each index will be the sum of all the elements <= that number
+    * For loop is in this order, so that elements later in the array will be added at the last possible position  ==> stability
     */
-   for(i=0;i<length;i++)
+   for(i=length-1;i>=0;i--)
    {
        //We want to figure out where to put array[i], pos[array[i], gives including that number how many are there before it. -1 for 0 indexing
        temp[pos[array[i]] -1] = array[i];

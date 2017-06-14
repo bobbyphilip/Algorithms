@@ -244,6 +244,7 @@ static void shellSort(int* array, int length)
  * Recursively sort the 2 sides
  * If total elements to be sorted in a call to this API is small, good idea to used insertion sort
  * Java uses 7 as threshold, qsort uses 4
+ * Worst case will be when array is sorted*
  */
 static void quickSort(int* array, int start, int end)
 {
@@ -344,6 +345,7 @@ static void swap(int* array, int a, int b)
 
 
 /**
+ * Basic idea is to find the number of elements less than the specific element and then directly put it in its correct position
  * Counting sort is of order O(N+K)
  * Space O(N+K)
  * initialise an counting array of length k (0-k-1) to zero
@@ -351,14 +353,13 @@ static void swap(int* array, int a, int b)
  * to finish the sort iterate over the countingArray, 
  * output[i++] = while(countingArray[j]!= 0) j, decrementing countingArray[j],and going forward by incremening j
  * But this is not stable, one way is to keep a linked list at each node of the counting array
- * Implementation below is stable
  */
 
 
-//Doesnt work right now with negative arrays
 static void countingSort(int* array, int length, int base)
 {
-   //Hack, converting input array to all positive number
+   //base is the range of numbers
+   //Hack, converting input array to all positive number, as our random generator now generates negative as well
    int i=0;
    for(i=0;i<length;i++)
    {
@@ -378,30 +379,23 @@ static void countingSort(int* array, int length, int base)
    {
        pos[array[i]]++;
    }
-   for(i=1;i<base;i++)
+   for(i=1;i<=base;i++)
    {
        pos[i] = pos[i] + pos[i-1];
    }
    /**
-    * At this point the cumulative counts are obtained.
+    * At this point the cumulative counts are obtained
     * Each index will be the sum of all the elements <= that number
     */
    for(i=0;i<length;i++)
    {
-       if(array[i] ==0)
-           continue;
-       int index = pos[array[i]-1];
-       /**
-        * Index will give how many elements to the left of this element are there
-        */
-       temp[index]= array[i];
-       pos[array[i]-1]++;
-
+       //We want to figure out where to put array[i], pos[array[i], gives including that number how many are there before it. -1 for 0 indexing
+       temp[pos[array[i]] -1] = array[i];
+       pos[array[i]]--;
    }
    memcpy(array,temp,length*sizeof(int));
    free(temp);
    free(pos);
-
 }
 
 /**

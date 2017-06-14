@@ -63,7 +63,10 @@ int main(int argc, char* argv[])
     
 
     createRandomArray(length, &array); 
-    printArray(array, length);
+    if(length<30)
+    {
+    	printArray(array, length);
+    }
     profile();
     sort(array, length, sortAlgorithm);  
     int timeTaken = profile();
@@ -82,8 +85,11 @@ int main(int argc, char* argv[])
     }else{
         printf("Array is not sorted !! \n");
     }
+    if(length<30)
+    {
+    	printArray(array, length);
+    }
 
-    printArray(array, length);
     free(array);
     return 0;
 }

@@ -439,6 +439,7 @@ static void radixLsdSort(char** array, int length, int stringLength)
         }
         stringIndex--;
     }
+    free(temp);
 }
 
 

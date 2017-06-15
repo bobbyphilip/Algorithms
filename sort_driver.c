@@ -45,10 +45,11 @@ int main(int argc, char* argv[])
     {
         printf("Radix LSD Sort \n");
         char** stringArray = NULL;
-        createRandomStringArray(length+1, 9, &stringArray);
+        int stringLength =8;
+        createRandomStringArray(length, stringLength, &stringArray);
         printStringArray(stringArray, length);
         profile();
-        stringSort(stringArray,length, 9, sortAlgorithm);
+        stringSort(stringArray,length, stringLength, sortAlgorithm);
         int timeTaken = profile();
         if(0 == timeTaken)
         {

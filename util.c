@@ -41,7 +41,7 @@ void createRandomStringArray(int length, int stringLength, char*** array)
 
 void createRandomString(char** outputString, int stringLength)
 {
-    char* string = malloc(sizeof(char)*stringLength);
+    char* string = malloc(sizeof(char)*(stringLength+1));
     static const char alphanum[] =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -53,7 +53,7 @@ void createRandomString(char** outputString, int stringLength)
         randomSeeded =1;
     }
     int i =0;
-    for(i=0;i<stringLength-1;i++)
+    for(i=0;i<stringLength;i++)
     {
 
         string[i]= alphanum[random()%(sizeof(alphanum)-1)];

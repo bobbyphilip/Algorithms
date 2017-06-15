@@ -410,14 +410,14 @@ static void radixLsdSort(char** array, int length, int stringLength)
     char** temp = malloc(length*sizeof(char*));
     int i =0;
     int stringIndex =stringLength -1;
-    while(stringIndex != 0)
+    while(stringIndex >= 0)
     {
         memset(temp, 0, length*sizeof(char*));
         memset(pos,0,256*sizeof(int));
 
         for(i=0;i<length;i++)
         {
-            pos[(int)array[i][stringIndex-1]]++;
+            pos[(int)array[i][stringIndex]]++;
         }
         for(i=1;i<256;i++)
         {
@@ -425,12 +425,12 @@ static void radixLsdSort(char** array, int length, int stringLength)
         }
         
         int index=0;     
-        for(i=0;i<length;i++)
+        for(i=length-1;i>=0;i--)
         {
-            index = pos[array[i][stringIndex-1]-1];
+            index = pos[(int)array[i][stringIndex]]-1;
         //    strncpy(temp[index],array[i],stringLength);
             temp[index] = array[i];
-            pos[array[i][stringIndex-1]-1]++;
+            pos[(int)array[i][stringIndex]]--;
         }
         for(i=0;i<length;i++)
         {

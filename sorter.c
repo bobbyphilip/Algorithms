@@ -250,6 +250,9 @@ static void quickSort(int* array, int start, int end)
 {
     if(start<end)
     {
+    	int medianIndex = median(array, start, end);
+    	swap(array, medianIndex, end);
+       
         int mid = partition(array, start, end);
         quickSort(array, start, mid-1);
         quickSort(array, mid+1, end);
@@ -267,16 +270,13 @@ static void quickSort(int* array, int start, int end)
  */
 static int partition(int* array, int start, int end)
 {
-    int medianIndex = median(array, start, end);
-    int medianValue = array[medianIndex];
     
-    swap(array, medianIndex, end);
     
     int pivot = start;
     int i;
     for(i = start; i<end;i++)
     {
-        if(array[i]<= medianValue)
+        if(array[i]<= array[end])
         {
             swap(array,i,pivot);
             pivot++;

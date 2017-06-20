@@ -41,9 +41,12 @@ maxBinaryHeap.o: maxBinaryHeap.c maxBinaryHeap.h
 maxPriorityQueue.o: maxPriorityQueue.c maxPriorityQueue.h 
 	$(CC) $(CFLAGS) -c maxPriorityQueue.c
 
+quickSelect: quickSelect.c util.o sorter.o
+	$(CC) $(CFLAGS) -o quickSelect quickSelect.c util.o sorter.o maxBinaryHeap.o
 
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_dSYM
+
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM 
 
 clean_dSYM:
 	rm -rf *dSYM
@@ -72,3 +75,6 @@ clean_fibonacci:
 	rm -f fibonacci
 clean_maxSubArray:
 	rm -f maxSubArray
+
+clean_quickSelect:
+	rm -f quickSelect

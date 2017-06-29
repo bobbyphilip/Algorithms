@@ -1,6 +1,6 @@
 CFLAGS = -g -Wall -I.
 CC = gcc
-all: sort_driver util_tester string_rotate fibonacci
+all: sort_driver util_tester string_rotate fibonacci 
 
 DEBUG	?=n
 ifeq ($(DEBUG),y)
@@ -43,10 +43,12 @@ maxPriorityQueue.o: maxPriorityQueue.c maxPriorityQueue.h
 
 quickSelect: quickSelect.c util.o sorter.o
 	$(CC) $(CFLAGS) -o quickSelect quickSelect.c util.o sorter.o maxBinaryHeap.o
+linkedList: linkedList.c
+	$(CC) $(CFLAGS) -o linkedList linkedList.c
 
 
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM 
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM clean_linkedList
 
 clean_dSYM:
 	rm -rf *dSYM
@@ -78,3 +80,5 @@ clean_maxSubArray:
 
 clean_quickSelect:
 	rm -f quickSelect
+clean_linkedList:
+	rm -f linkedList 

@@ -45,10 +45,12 @@ quickSelect: quickSelect.c util.o sorter.o
 	$(CC) $(CFLAGS) -o quickSelect quickSelect.c util.o sorter.o maxBinaryHeap.o
 linkedList: linkedList.c
 	$(CC) $(CFLAGS) -o linkedList linkedList.c
+binaryTree: binaryTree.c
+	$(CC) $(CFLAGS) -o binaryTree binaryTree.c
 
 
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM clean_linkedList
+clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM clean_linkedList clean_binaryTree
 
 clean_dSYM:
 	rm -rf *dSYM
@@ -82,3 +84,5 @@ clean_quickSelect:
 	rm -f quickSelect
 clean_linkedList:
 	rm -f linkedList 
+clean_binaryTree:
+	rm -f binaryTree

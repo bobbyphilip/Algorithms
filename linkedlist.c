@@ -201,6 +201,114 @@ void insertSort(Node** headRef)
 
 }
 
+void append(Node** firstRef, Node** secondRef)
+{
+    if(*firstRef == NULL)
+    {
+      *firstRef = *secondRef;
+    } else 
+    {
+	Node* current = *firstRef;
+        while(current->next != NULL)
+        {
+	   current = current->next;
+	}
+	current->next = *secondRef;	
+    }
+    *secondRef = NULL;
+}
+
+void moveNode(Node** dest, Node** source)
+{
+   //Move the node from front of source to front of dest
+   Node* node = *source;
+   *source = node->next;
+   node->next=*dest;
+   *dest = node;
+}
+
+void splitIntoTwo(Node* input, Node** front,Node** back)
+{
+  if(input ==NULL || input->next == NULL)
+  {
+    *front = input;
+    *back = NULL;
+  } else 
+  {
+	Node* slow =input;
+        Node* fast = input->next;
+        while(fast!=NULL)
+        {
+	   fast = fast->next;
+           if(fast!=NULL)
+           {
+		fast = fast->next;
+		slow = slow->next;
+	   }
+	}
+	*front = input;
+        *back = slow->next;
+        slow->next = NULL;
+  }
+}
+
+Node* sortedMerge(Node* first, Node* second)
+{
+	Node* result = NULL;
+	Node** lastRef = &result;
+        while(1)
+	{
+		if(first == NULL)
+		{
+			*lastRef = second;
+			break;
+		}else if(second == NULL)
+		{
+			*lastRef = first;
+			break;
+		}else
+		{
+			if(first->data <= second->data)
+			{	
+				moveNode(lastRef,&first);
+			}else {
+				moveNode(lastRef, &second);
+			}
+			lastRef = &((*lastRef)->next);
+		}
+         }
+	 return result;
+}
+
+void reverse(Node** head)
+{
+#if 0
+while (current != NULL) {
+next = current->next; // tricky: note the next node
+current->next = result; // move the node onto the result
+result = current;
+current = next;
+}
+*head = result
+
+#endif
+
+    if(*head== NULL)
+    {
+	return;
+    }
+    Node* first = *head;
+    Node* rest = first->next;
+    if(rest == NULL)
+    {
+	return;
+    }
+    reverse(&rest);
+    first->next->next = first;
+    first->next = NULL;
+    *head = rest; 
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -224,9 +332,17 @@ int main(int argc, char* argv[])
     printLinkedList(node);
     insertSort(&node);
     printLinkedList(node);
+    append(&node, &copy);
+    printLinkedList(node);
+    reverse(&node);
+    printLinkedList(node);
+ 
     
 }
    
    
 
- 
+/*
+ Binary tree to double linked list in order  (Node-data,small, large... recursiveBuildList(Node*) { recu(node.small), recu(node.lar), node.small = node.large = node;  append(node.small, node, node.large}
+append means joining a large to b small and a a small to blarge and vice versa
+*/ 

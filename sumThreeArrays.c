@@ -6,6 +6,7 @@
 
 #define ARRAY_LENGTH 5
 
+//Three input arrays, find an element from each, so that sum of them is 0
 int main(int argc, char* argv[])
 {
    int* a;

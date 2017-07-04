@@ -66,7 +66,6 @@ void createRandomString(char** outputString, int stringLength)
 
 void printArray(int*array, int length)
 {
-#ifdef DEBUG
     int i =0;
     if(length==0)
     {
@@ -79,14 +78,12 @@ void printArray(int*array, int length)
         printf(", %d",array[i]);
     }
     printf("]\n");
-#endif
 }
 
 
 
 void printStringArray(char** array, int length)
 {
-#ifdef DEBUG
     int i =0;
     if(length==0)
     {
@@ -99,7 +96,6 @@ void printStringArray(char** array, int length)
         printf(", %s",array[i]);
     }
     printf("]\n");
-#endif
 }
 
 int isArraySorted(int*array, int length)

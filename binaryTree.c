@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util.h>
-
+#include <limits.h>
 
 //http://cslibrary.stanford.edu/110/
 
@@ -13,6 +13,8 @@ typedef struct Node
   struct Node* right;
 }Node;
 
+void printPathRecursive(Node* node, int path[], int length);
+int isBSTRecursive(Node* node, int min, int max);
 
 //BST
 int lookup(Node* node, int data)
@@ -32,6 +34,15 @@ int lookup(Node* node, int data)
     {
 	return lookup(node->right, data);
     }
+ #if 0
+  while(node!=NULL and node->data!=data)
+  {
+	if(data<node->data)
+          node = node->left;
+        else node = node->right;
+   }
+   return node
+ #endif
 }
 
 //BT
@@ -75,14 +86,6 @@ void printTree(Node* node)
 }
 
 
-int hasPathWithSum(Node* node, int sum)
-{
-  if(node == NULL)
-  {
-	return sum ==0;
-  }
-  return 
-
 //BT
 int hasPathWithSum(Node* node, int sum)
 {
@@ -101,7 +104,7 @@ void printPaths(Node* rootNode)
 	int path[1000];
         printPathRecursive(rootNode, path, 0);
 }
-void printPathRecursive(Node* node, int path[], length)
+void printPathRecursive(Node* node, int path[], int length)
 {
   if(node == NULL)
 	return;
@@ -132,6 +135,81 @@ int isBSTRecursive(Node* node, int min, int max)
 }
 
 
+Node* minimumNode(Node* node)
+{
+   if(node == NULL)
+	return NULL;
+   while(node->left != NULL)
+   {
+	node = node->left;
+   }
+   return node;
+}
+
+		
+
 /*
 n-node binary tree, track the left most child and right sibling
 */
+
+Node* newNode(int data)
+{
+	Node* newNode = malloc(sizeof(Node));
+        newNode->data = data;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+Node* insert(Node* root, int data)
+{
+
+	if(root == NULL)
+		return newNode(data);
+ 	else
+	{
+		if(data <= root->data)
+			root->left = insert(root->left, data);
+		else 
+			root->right = insert(root->right, data);
+	}
+	return root;
+}
+
+
+Node* deleteNode(Node* node, int data)
+{
+    if(node == NULL)
+	return node;
+    
+    if(data < node->data)
+    {
+	node->left = deleteNode(node->left, data);
+    } else if (data > node->data)
+    {
+	node->right = deleteNode(node->right, data);
+    }else
+    {
+	//We found the node to be deleted
+  
+	//If either of the children are NULL promote the other 
+        if(node->left == NULL)
+        {
+           Node* temp = node->right;
+           free(node);
+       	   return temp;
+        } 
+        if(node->right == NULL)
+        {
+           Node* temp = node->left;
+           free(node);
+       	   return temp;
+        }
+        Node *temp = minimumNode(node->right);
+        node->data = temp->data;
+        node->right = deleteNode(node->right, temp->data);
+    }
+    return node;
+}	
+     
+	
+  

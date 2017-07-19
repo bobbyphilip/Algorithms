@@ -52,7 +52,10 @@ sumThreeArrays: sumThreeArrays.c util.o sorter.o maxBinaryHeap.o
 
 
 
-clean:  clean_sorter clean_util clean_sort_driver clean_util_tester clean_string_rotate clean_fibonacci clean_maxSubArray clean_quickSelect clean_dSYM clean_linkedList clean_binaryTree clean_sumThreeArrays
+clean:  clean_dSYM clean_binaries
+
+clean_binaries:
+	rm -rf *.o 
 
 clean_dSYM:
 	rm -rf *dSYM

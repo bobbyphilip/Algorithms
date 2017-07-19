@@ -204,6 +204,8 @@ Node* deleteNode(Node* node, int data)
            free(node);
        	   return temp;
         }
+	//temp is basically the next element in the sorted order to node
+        // it is the left most node on the right branch.  This left can have a right child, so its delete has to be done using deleteNode
         Node *temp = minimumNode(node->right);
         node->data = temp->data;
         node->right = deleteNode(node->right, temp->data);
